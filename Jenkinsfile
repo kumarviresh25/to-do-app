@@ -38,7 +38,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 echo "Deploying the container"
-                sh "/opt/homebrew/bin/docker-compose stop && /opt/homebrew/bin/docker-compose up -d"
+                sh "/usr/local/bin/docker-compose stop && /usr/local/bin/docker-compose up -d"
             }
         }
     }
