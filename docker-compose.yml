@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   web:
-    image: siddhantbhattarai/todo-list-app:latest
+    image: vireshkumar327/cisco:latest
     ports:
       - "8000:8000"
 
