@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/opt/homebrew/bin:$PATH"
+    }
+
     stages {
         stage("Clone Code") {
             steps {
@@ -12,15 +16,15 @@ pipeline {
         stage("Verify Docker Installation") {
             steps {
                 echo "Verifying Docker installation"
-                sh "/opt/homebrew/bin/docker --version"
-                sh "/opt/homebrew/bin/docker info"
+                sh "docker --version"
+                sh "docker info"
             }
         }
 
         stage("Build") {
             steps {
                 echo "Building the Docker image"
-                sh "/opt/homebrew/bin/docker build -t vireshkumar327/cisco ."
+                sh "docker build -t vireshkumar327/cisco ."
             }
         }
 
@@ -28,17 +32,17 @@ pipeline {
             steps {
                 echo "Pushing the Docker image to Docker Hub"
                 withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-                    sh "/opt/homebrew/bin/docker tag vireshkumar327/cisco ${env.dockerHubUser}/cisco:latest"
-                    sh "/opt/homebrew/bin/docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "/opt/homebrew/bin/docker push ${env.dockerHubUser}/cisco:latest"
+                    sh "docker tag vireshkumar327/cisco ${env.dockerHubUser}/cisco:latest"
+                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                    sh "docker push ${env.dockerHubUser}/cisco:latest"
                 }
             }
         }
 
         stage("Deploy") {
             steps {
-                echo "Deploying the container"
-                sh "/usr/local/bin/docker-compose stop && /usr/local/bin/docker-compose up -d"
+                echo "Stopping and starting Docker containers"
+                sh "docker-compose stop && docker-compose up -d"
             }
         }
     }
