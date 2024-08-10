@@ -28,9 +28,9 @@ pipeline {
             steps {
                 echo "Pushing the Docker image to Docker Hub"
                 withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-                    sh "/opt/homebrew/bin/docker tag todo-list-app ${env.dockerHubUser}/vireshkumar327/cisco:latest"
+                    sh "/opt/homebrew/bin/docker tag vireshkumar327/cisco ${env.dockerHubUser}/cisco:latest"
                     sh "/opt/homebrew/bin/docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "/opt/homebrew/bin/docker push ${env.dockerHubUser}/vireshkumar327/cisco:latest"
+                    sh "/opt/homebrew/bin/docker push ${env.dockerHubUser}/cisco:latest"
                 }
             }
         }
