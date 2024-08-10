@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage("Clone Code") {
+            steps {
+                echo "Cloning the code"
+                git url: "https://github.com/kumarviresh25/to-do-app.git", branch: "main"
+            }
+        }
+
         stage("Verify Docker Installation") {
             steps {
                 echo "Verifying Docker installation"
