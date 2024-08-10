@@ -9,6 +9,14 @@ pipeline {
             }
         }
 
+        stage("Verify Docker Installation") {
+            steps {
+                echo "Verifying Docker installation"
+                sh "docker --version"
+                sh "docker info"
+            }
+        }
+
         stage("Build") {
             steps {
                 echo "Building the Docker image"
@@ -35,3 +43,4 @@ pipeline {
         }
     }
 }
+
