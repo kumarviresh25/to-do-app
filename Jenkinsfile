@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/local/bin:/opt/homebrew/bin:$PATH"
+    }
+
     stages {
         stage("Clone Code") {
             steps {
@@ -37,8 +41,8 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                echo "Deploying the container"
-                sh "/opt/homebrew/bin/docker-compose down && /opt/homebrew/bin/docker-compose up -d"
+                echo "Stopping and starting Docker containers"
+                sh "/usr/local/bin/docker-compose stop && /usr/local/bin/docker-compose up -d"
             }
         }
     }
