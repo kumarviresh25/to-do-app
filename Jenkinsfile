@@ -20,7 +20,7 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building the Docker image"
-                sh "/opt/homebrew/bin/docker build -t vireshkumar327/cisco ."
+                sh "/opt/homebrew/bin/docker build -t vireshkumar327/to-do-app ."
             }
         }
 
@@ -28,9 +28,9 @@ pipeline {
             steps {
                 echo "Pushing the Docker image to Docker Hub"
                 withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-                    sh "/opt/homebrew/bin/docker tag vireshkumar327/cisco ${env.dockerHubUser}/cisco:latest"
+                    sh "/opt/homebrew/bin/docker tag vireshkumar327/to-do-app ${env.dockerHubUser}/to-do-app:latest"
                     sh "/opt/homebrew/bin/docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "/opt/homebrew/bin/docker push ${env.dockerHubUser}/cisco:latest"
+                    sh "/opt/homebrew/bin/docker push ${env.dockerHubUser}/to-do-app:latest"
                 }
             }
         }
